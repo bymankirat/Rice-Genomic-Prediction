@@ -50,7 +50,8 @@
     { v: f(rRand), l: "mean accuracy (r)", s: "random 5-fold cross-validation" },
     { v: f(rAcross), l: "mean accuracy (r)", s: "on a group never seen in training" },
     { v: `${found}/${checks.length}`, l: "known genes recovered", s: "sd1, Waxy, GS3 and others" },
-  ].map((k) => `<div class="kpi"><b>${esc(k.v)}</b><span>${esc(k.l)}</span><i class="small">${esc(k.s)}</i></div>`).join("");
+  ].map((k) =>
+    `<div class="kpi"><div class="v">${esc(k.v ?? "–")}</div><div class="l">${esc(k.l)}</div><div class="arms small">${esc(k.s)}</div></div>`).join("");
 
   const drop = rRand && rAcross ? (rRand - rAcross) / rRand : null;
   const t = [];
