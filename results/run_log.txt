@@ -1,19 +1,53 @@
 
 === step 1: download the Rice Diversity Panel genotypes and phenotypes ===
-16:43:28   HTTP 404: http://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
-16:43:29   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
-16:43:30   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
-16:43:32   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
-16:43:36   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
-16:43:45   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
+16:46:27 index http://ricediversity.org/data/sets/44kgwas/: 12 links
+16:46:27 genotype candidates: http://ricediversity.org/data/sets/44kgwas/RiceDiversity.44K.MSU6.Genotypes_PLINK.zip; http://ricediversity.org/data/sets/44kgwas/RiceDiversity.44K.MSU6.Genotypes_PLINK.zip; http://ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip; http://ricediversity.org/data/sets/44kgwas/RiceDiversity.44K.MSU6.Genotypes.PLINK.zip
+16:46:27 phenotype candidates: http://ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Phenotypes_34traits_PLINK.txt; http://ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Phenotypes_34traits_PLINK.txt; http://ricediversity.org/data/sets/44kgwas/RiceDiversity.44K.MSU6.Phenotypes.txt
+16:46:28 genotype archive contains: RiceDiversity_44K_Genotypes_PLINK/, RiceDiversity_44K_Genotypes_PLINK/sativas413.fam, __MACOSX/, __MACOSX/RiceDiversity_44K_Genotypes_PLINK/, __MACOSX/RiceDiversity_44K_Genotypes_PLINK/._sativas413.fam, RiceDiversity_44K_Genotypes_PLINK/sativas413.map, __MACOSX/RiceDiversity_44K_Genotypes_PLINK/._sativas413.map, RiceDiversity_44K_Genotypes_PLINK/sativas413.ped, __MACOSX/RiceDiversity_44K_Genotypes_PLINK/._sativas413.ped
+16:46:28 phenotype columns (38): ['HybID', 'NSFTVID', 'Flowering time at Arkansas', 'Flowering time at Faridpur', 'Flowering time at Aberdeen', 'FT ratio of Arkansas/Aberdeen'] …
+
+=== step 2: read PLINK files, quality control, genotype matrix and traits ===
+16:46:28 36901 markers in the map file, chromosomes [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(9), np.int64(10), np.int64(11), np.int64(12)]
+16:46:30 413 samples read
+16:46:35 QC: 383/413 samples and 25085/36901 markers pass (call rate >= 0.95, MAF >= 0.05)
+16:46:35 phenotype file: 413 rows, 38 columns; first columns ['HybID', 'NSFTVID', 'Flowering time at Arkansas']
+16:46:35 37 of 37 traits have at least 100 measured varieties
+16:46:35 phenotypes matched for 0 of 383 genotyped varieties
+16:46:35 genotype matrix: 383 samples x 25085 markers
+
+=== step 3: population structure: PCA and genetic groups ===
+16:46:37 variance explained by the first PCs: PC1 37.7%, PC2 11.0%, PC3 6.4%, PC4 2.4%, PC5 1.7%
+16:46:38 silhouette by k: {2: 0.601, 3: 0.673, 4: 0.631, 5: 0.686, 6: 0.636, 7: 0.604, 8: 0.612} -> k = 5
+16:46:38 group sizes:
+group
+G1    110
+G2     85
+G3     51
+G4    121
+G5     16
+
+=== step 4: GWAS per trait with structure correction, checked on known genes ===
+16:46:38 37 traits, 25085 markers, genome-wide threshold p < 1.99e-06
+16:46:38 known-gene checks: 0/0 recovered a genome-wide significant marker in the window
+
+=== step 5: genomic prediction: within and across genetic groups ===
 Traceback (most recent call last):
   File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/run_all.py", line 38, in <module>
     main()
   File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/run_all.py", line 33, in main
     importlib.import_module(mod).main()
-  File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/pipeline/s01_fetch.py", line 15, in main
-    g, gsrc = download_any(config.GENOTYPE_URLS, RAW / "genotypes.zip")
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/pipeline/util.py", line 81, in download_any
-    raise RuntimeError(f"all sources failed for {dest.name}")
-RuntimeError: all sources failed for genotypes.zip
+  File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/pipeline/s05_prediction.py", line 101, in main
+    summary = (df.groupby(["trait", "test", "model"])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/util/_decorators.py", line 336, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/frame.py", line 10835, in groupby
+    return DataFrameGroupBy(
+           ^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/groupby/groupby.py", line 1095, in __init__
+    grouper, exclusions, obj = get_grouper(
+                               ^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/pandas/core/groupby/grouper.py", line 901, in get_grouper
+    raise KeyError(gpr)
+KeyError: 'trait'

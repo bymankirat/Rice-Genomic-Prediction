@@ -1,0 +1,13 @@
+{
+ "chromosomes": 12,
+ "markers_in": 36901,
+ "markers_kept": 25085,
+ "missing_rate_before_qc": 0.0433560433574213,
+ "samples_in": 413,
+ "samples_kept": 383,
+ "thresholds": {
+  "maf": 0.05,
+  "sample_call_rate": 0.9,
+  "snp_call_rate": 0.95
+ }
+}
