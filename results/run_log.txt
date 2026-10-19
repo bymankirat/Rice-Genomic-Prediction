@@ -1,0 +1,19 @@
+
+=== step 1: download the Rice Diversity Panel genotypes and phenotypes ===
+16:43:28   HTTP 404: http://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
+16:43:29   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
+16:43:30   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
+16:43:32   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
+16:43:36   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
+16:43:45   SSLError: https://www.ricediversity.org/data/sets/44kgwas/RiceDiversity_44K_Genotypes_PLINK.zip
+Traceback (most recent call last):
+  File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/run_all.py", line 38, in <module>
+    main()
+  File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/run_all.py", line 33, in main
+    importlib.import_module(mod).main()
+  File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/pipeline/s01_fetch.py", line 15, in main
+    g, gsrc = download_any(config.GENOTYPE_URLS, RAW / "genotypes.zip")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Rice-Genomic-Prediction/Rice-Genomic-Prediction/pipeline/util.py", line 81, in download_any
+    raise RuntimeError(f"all sources failed for {dest.name}")
+RuntimeError: all sources failed for genotypes.zip
